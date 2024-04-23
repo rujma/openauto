@@ -1,0 +1,70 @@
+{
+    "dependencies": [
+        {
+            "name": "boost"
+        },
+        {
+            "name": "libusb"
+        },
+        {
+            "name": "openssl"
+        },
+        {
+            "name": "protobuf"
+        },
+        {
+            "name": "gstreamer"
+        },
+        {
+            "name": "xcb"
+        },
+        {
+            "name": "opengl"
+        },
+        {
+            "name": "rtaudio"
+        },
+        {
+            "name": "glib"
+        },
+        {
+            "name": "zlib"
+        },
+        {
+            "name": "libnice-gst"
+        },
+        {
+            "name": "qt5"
+        },
+        {
+            "name": "qt5-base"
+        },
+        {
+            "name": "qt5-tools"
+        },
+        {
+            "name": "qt5-quickcontrols2"
+        },
+        {
+            "name": "qt5-wayland"
+        },
+        {
+            "name" :"qt5-connectivity"
+        },
+        {
+            "name": "qt5-svg"
+        },
+        {
+            "name": "qt5-multimedia"
+        },
+        {
+            "name": "qt5-speech"
+        },
+        {
+            "name": "qt5-x11extras"
+        },
+        {
+            "name": "qt5-declarative"
+        }
+    ]
+}

@@ -18,6 +18,7 @@
 
 #include <thread>
 #include <QApplication>
+#include <QtPlugin>
 #include <f1x/aasdk/USB/USBHub.hpp>
 #include <f1x/aasdk/USB/ConnectedAccessoriesEnumerator.hpp>
 #include <f1x/aasdk/USB/AccessoryModeQueryChain.hpp>
@@ -83,6 +84,9 @@ int main(int argc, char* argv[])
     startUSBWorkers(ioService, usbContext, threadPool);
     startIOServiceWorkers(ioService, threadPool);
 
+    qputenv("QT_DEBUG_PLUGINS", QByteArray("1"));
+    qputenv("QML_IMPORT_TRACE", "1");
+
     QApplication qApplication(argc, argv);
     autoapp::ui::MainWindow mainWindow;
     mainWindow.setWindowFlags(Qt::WindowStaysOnTopHint);
@@ -108,7 +112,7 @@ int main(int argc, char* argv[])
         qApplication.setOverrideCursor(cursor);
     });
 
-    mainWindow.showFullScreen();
+    mainWindow.show();
 
     aasdk::usb::USBWrapper usbWrapper(usbContext);
     aasdk::usb::AccessoryModeQueryFactory queryFactory(usbWrapper, ioService);

@@ -20,6 +20,7 @@
 
 #include <memory>
 #include <f1x/aasdk/Channel/AV/VideoServiceChannel.hpp>
+#include <f1x/aasdk/Channel/AV/AVInputServiceChannel.hpp>
 #include <f1x/aasdk/Channel/AV/IVideoServiceChannelEventHandler.hpp>
 #include <f1x/openauto/autoapp/Projection/IVideoOutput.hpp>
 #include <f1x/openauto/autoapp/Service/IService.hpp>
@@ -46,6 +47,7 @@ public:
     void onChannelOpenRequest(const aasdk::proto::messages::ChannelOpenRequest& request) override;
     void onAVChannelSetupRequest(const aasdk::proto::messages::AVChannelSetupRequest& request) override;
     void onAVChannelStartIndication(const aasdk::proto::messages::AVChannelStartIndication& indication) override;
+    void onAVChannelStopIndication(const aasdk::proto::messages::AVChannelStopIndication& indication) override;
     void onAVMediaWithTimestampIndication(aasdk::messenger::Timestamp::ValueType timestamp, const aasdk::common::DataConstBuffer& buffer) override;
     void onAVMediaIndication(const aasdk::common::DataConstBuffer& buffer) override;
     void onVideoFocusRequest(const aasdk::proto::messages::VideoFocusRequest& request) override;

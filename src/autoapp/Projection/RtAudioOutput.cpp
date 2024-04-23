@@ -18,6 +18,7 @@
 
 #include <f1x/openauto/autoapp/Projection/RtAudioOutput.hpp>
 #include <f1x/openauto/Common/Log.hpp>
+#include <stdexcept>
 
 namespace f1x
 {
@@ -57,7 +58,7 @@ bool RtAudioOutput::open()
             dac_->openStream(&parameters, nullptr, RTAUDIO_SINT16, sampleRate_, &bufferFrames, &RtAudioOutput::audioBufferReadHandler, static_cast<void*>(this), &streamOptions);
             return audioBuffer_.open(QIODevice::ReadWrite);
         }
-        catch(const RtAudioError& e)
+        catch(const std::exception& e)
         {
             OPENAUTO_LOG(error) << "[RtAudioOutput] Failed to open audio output, what: " << e.what();
         }
@@ -85,7 +86,7 @@ void RtAudioOutput::start()
         {
             dac_->startStream();
         }
-        catch(const RtAudioError& e)
+        catch(const std::exception& e)
         {
             OPENAUTO_LOG(error) << "[RtAudioOutput] Failed to start audio output, what: " << e.what();
         }
@@ -132,7 +133,7 @@ void RtAudioOutput::doSuspend()
         {
             dac_->stopStream();
         }
-        catch(const RtAudioError& e)
+        catch(const std::exception& e)
         {
             OPENAUTO_LOG(error) << "[RtAudioOutput] Failed to suspend audio output, what: " << e.what();
         }

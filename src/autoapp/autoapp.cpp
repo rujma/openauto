@@ -43,7 +43,7 @@ using ThreadPool = std::vector<std::thread>;
 void startUSBWorkers(boost::asio::io_service& ioService, libusb_context* usbContext, ThreadPool& threadPool)
 {
     auto usbWorker = [&ioService, usbContext]() {
-        timeval libusbEventTimeout{180, 0};
+        timeval libusbEventTimeout{360, 0};
 
         while(!ioService.stopped())
         {
@@ -84,8 +84,8 @@ int main(int argc, char* argv[])
     startUSBWorkers(ioService, usbContext, threadPool);
     startIOServiceWorkers(ioService, threadPool);
 
-    qputenv("QT_DEBUG_PLUGINS", QByteArray("1"));
-    qputenv("QML_IMPORT_TRACE", "1");
+    // qputenv("QT_DEBUG_PLUGINS", QByteArray("1"));
+    // qputenv("QML_IMPORT_TRACE", "1");
 
     QApplication qApplication(argc, argv);
     autoapp::ui::MainWindow mainWindow;

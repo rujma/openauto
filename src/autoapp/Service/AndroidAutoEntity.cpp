@@ -182,8 +182,8 @@ void AndroidAutoEntity::onAudioFocusRequest(const aasdk::proto::messages::AudioF
     OPENAUTO_LOG(info) << "[AndroidAutoEntity] requested audio focus, type: " << request.audio_focus_type();
 
     aasdk::proto::enums::AudioFocusState::Enum audioFocusState =
-            request.audio_focus_type() == aasdk::proto::enums::AudioFocusType::RELEASE ? aasdk::proto::enums::AudioFocusState::LOSS
-                                                                                       : aasdk::proto::enums::AudioFocusState::GAIN;
+        request.audio_focus_type() == aasdk::proto::enums::AudioFocusType::RELEASE ? aasdk::proto::enums::AudioFocusState::LOSS
+                                                                                   : aasdk::proto::enums::AudioFocusState::GAIN;
 
     OPENAUTO_LOG(info) << "[AndroidAutoEntity] audio focus state: " << audioFocusState;
 
@@ -227,8 +227,9 @@ void AndroidAutoEntity::onNavigationFocusRequest(const aasdk::proto::messages::N
     controlServiceChannel_->receive(this->shared_from_this());
 }
 
-void AndroidAutoEntity::onPingResponse(const aasdk::proto::messages::PingResponse&)
+void AndroidAutoEntity::onPingResponse(const aasdk::proto::messages::PingResponse& response)
 {
+    OPENAUTO_LOG(info) << "[AndroidAutoEntity] Ping response, timestamp: "  << response.timestamp();
     pinger_->pong();
     controlServiceChannel_->receive(this->shared_from_this());
 }
@@ -254,14 +255,14 @@ void AndroidAutoEntity::schedulePing()
         this->sendPing();
         this->schedulePing();
     },
-    [this, self = this->shared_from_this()](auto error) {
-        if(error != aasdk::error::ErrorCode::OPERATION_ABORTED &&
-           error != aasdk::error::ErrorCode::OPERATION_IN_PROGRESS)
-        {
-            OPENAUTO_LOG(error) << "[AndroidAutoEntity] ping timer exceeded.";
-            this->triggerQuit();
-        }
-    });
+                  [this, self = this->shared_from_this()](auto error) {
+                      if(error != aasdk::error::ErrorCode::OPERATION_ABORTED &&
+                          error != aasdk::error::ErrorCode::OPERATION_IN_PROGRESS)
+                      {
+                          OPENAUTO_LOG(error) << "[AndroidAutoEntity] ping timer exceeded.";
+                          this->triggerQuit();
+                      }
+                  });
 
     pinger_->ping(std::move(promise));
 }
@@ -272,6 +273,8 @@ void AndroidAutoEntity::sendPing()
     promise->then([]() {}, std::bind(&AndroidAutoEntity::onChannelError, this->shared_from_this(), std::placeholders::_1));
 
     aasdk::proto::messages::PingRequest request;
+    auto timestamp = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
+    request.set_timestamp(timestamp.count());
     controlServiceChannel_->sendPingRequest(request, std::move(promise));
 }
 

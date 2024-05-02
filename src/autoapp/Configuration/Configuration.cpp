@@ -16,7 +16,7 @@
 *  along with openauto. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <f1x/openauto/autoapp/Configuration/Configuration.hpp>
+#include "f1x/openauto/autoapp/Configuration/Configuration.hpp"
 #include <f1x/openauto/Common/Log.hpp>
 
 namespace f1x

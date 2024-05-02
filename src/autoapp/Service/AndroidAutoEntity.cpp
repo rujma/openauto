@@ -240,6 +240,18 @@ void AndroidAutoEntity::onChannelError(const aasdk::error::Error& e)
     this->triggerQuit();
 }
 
+void onPingRequest(const proto::messages::PingRequest& request)
+{
+    OPENAUTO_LOG(info) << "[AndroidAutoEntity] Ping request, timestamp: " << request.timestamp();
+    return;
+} 
+
+void onVoiceSessionRequest(const proto::messages::VoiceSessionRequest& request)
+{
+    OPENAUTO_LOG(info) << "[AndroidAutoEntity] Voice session request, type: " << request.type();
+    return;
+}
+
 void AndroidAutoEntity::triggerQuit()
 {
     if(eventHandler_ != nullptr)
@@ -277,6 +289,8 @@ void AndroidAutoEntity::sendPing()
     request.set_timestamp(timestamp.count());
     controlServiceChannel_->sendPingRequest(request, std::move(promise));
 }
+
+
 
 }
 }

@@ -60,6 +60,9 @@ public:
     void onNavigationFocusRequest(const aasdk::proto::messages::NavigationFocusRequest& request) override;
     void onPingResponse(const aasdk::proto::messages::PingResponse& response) override;
     void onChannelError(const aasdk::error::Error& e) override;
+    /* New mock up API test library */
+    void onPingRequest(const proto::messages::PingRequest& request) override; 
+    void onVoiceSessionRequest(const proto::messages::VoiceSessionRequest& request) override;
 
 private:
     using std::enable_shared_from_this<AndroidAutoEntity>::shared_from_this;
